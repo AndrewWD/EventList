@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build:client": "webpack-cli",
-    "dev:client": "cross-env NODE_ENV=dev webpack-dev-server",
+    "dev:client": "cross-env NODE_ENV=dev webpack-dev-server --open",
     "dev:server": "NODE_ENV=dev nodemon server/server.js"
   },
   "author": "Yang Gao",

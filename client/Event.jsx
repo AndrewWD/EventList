@@ -8,7 +8,9 @@ const Event = props => {
     <div className="col-12 col-md-6 mt-4" key={event.id}>
       <div className="card event-body">
         <div className="card-body">
-          <h5 className="card-title">{event.name}</h5>
+          <div className="card-title title-container">
+            <h5>{event.name}</h5>
+          </div>
           <div><strong>Time</strong>: {eventTime(event.time_start, event.time_end)}</div>
           <div><strong>Cost</strong>: {!event.cost ? 'N/A' : `$${event.cost}`}</div>
           <div><strong>Distance</strong>: {event.distance ? event.distance.toPrecision(3) + ' miles' : '-'}</div>
