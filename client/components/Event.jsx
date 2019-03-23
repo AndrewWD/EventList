@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import eventTime from '../utils/eventTime'
-import '../styles/Event.css'
+import styles from '../styles/Event.module.css'
 
 const Event = ({ event }) => {
   return (
-    <div className="event-body" key={event.id}>
-      <div className="title-container">
+    <div className={styles.eventBody} key={event.id}>
+      <div className={styles.titleContainer}>
         <h2>{event.name}</h2>
       </div>
       <div><strong>Time</strong>: {eventTime(event.time_start, event.time_end)}</div>
@@ -16,7 +16,7 @@ const Event = ({ event }) => {
         pathname: `/details/${event.id}`,
         state: event,
       }}>
-        <button className="detail-button">
+        <button className={styles.detailButton}>
           Detail
         </button>
       </Link>

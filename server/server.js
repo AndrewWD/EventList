@@ -20,7 +20,7 @@ app.use('/graphql', graphqlHTTP({
         // Extract the required information from the response data
         const essentialInfos = res.jsonBody.events.map(
           event => {
-            const { id, name, time_start, time_end, cost, latitude, longitude } = event
+            const { id, name, time_start, time_end, cost, latitude, longitude, image_url } = event
             return { 
               id,
               name, 
@@ -28,6 +28,7 @@ app.use('/graphql', graphqlHTTP({
               time_end, 
               cost,
               location: { latitude, longitude },
+              image_url,
             }
           }
         )

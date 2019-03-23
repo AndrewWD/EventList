@@ -1,4 +1,4 @@
-.event-body {
+.eventBody {
   position: relative;
   padding: 20px 40px;
   margin: 1%;
@@ -9,7 +9,7 @@
   border-radius: 0.25rem;
 }
 
-.title-container {
+.titleContainer {
   height: 4.5rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -17,15 +17,11 @@
   overflow: hidden;
 }
 
-.title-container > h2 {
-  font-size: 1.3rem;
-}
-
-.title-container ~ div {
+.titleContainer ~ div {
   margin-top: 5px;
 }
 
-.detail-button {
+.detailButton {
   position: absolute;
   right: 25px;
   bottom: 20px;
@@ -38,23 +34,23 @@
   transition: background-color 0.4s;
 }
 
-.detail-button:hover {
+.detailButton:hover {
   background-color: black;
   color: white;
 }
 
 @media all and (max-width: 1200px) {
-  .event-body {
+  .eventBody {
     width: 100%;
   }
 }
 
 @media all and (max-width: 576px) {
-  .event-body {
+  .eventBody {
     height: 270px;
     width: 100%;
   }
-  .detail-button {
+  .detailButton {
     left: 50%;
     transform: translate(-50%, 0);
     width: 200px;

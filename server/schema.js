@@ -14,6 +14,7 @@ const schema = buildSchema(`
     time_end: String
     cost: Float
     location: Location!
+    image_url: String
   }
 
   input UserQuery {

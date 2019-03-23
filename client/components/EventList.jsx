@@ -4,8 +4,8 @@ import { request } from 'graphql-request'
 import getCurrentLocation from '../utils/getCurrentLocation'
 import getStartTime from '../utils/getToday'
 import Event from './Event'
-import '../styles/EventList.css'
-import '../styles/LoadingRing.css'
+import styles from '../styles/EventList.module.css'
+import loadingStyles from '../styles/LoadingRing.module.css'
 
 const query = `
   query getEvent($latitude: Float!, $longitude: Float!, $limit: Int!, $start_date: Int!, $end_date: Int!, $radius: Int) {
@@ -18,7 +18,8 @@ const query = `
       location {
         latitude
         longitude
-      } 
+      }
+      image_url
     }
   }
 `
@@ -74,9 +75,9 @@ class EventList extends Component {
         <h1>Today's Events</h1>
         {
           loading ? (
-            <div className="loading-ring"></div>
+            <div className={loadingStyles.loadingRing}></div>
           ) : (
-            <div className="event-list">
+            <div className={styles.eventList}>
               {events.map(event => (
                 <Event event={event} key={event.id} />
               ))}
