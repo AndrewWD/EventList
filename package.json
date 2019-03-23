@@ -35,9 +35,11 @@
     "graphql": "^14.1.1",
     "graphql-request": "^1.8.2",
     "haversine": "^1.1.1",
+    "leaflet": "^1.4.0",
     "moment": "^2.24.0",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
+    "react-leaflet": "^2.2.1",
     "react-router-dom": "^5.0.0",
     "yelp-fusion": "^2.2.1"
   }

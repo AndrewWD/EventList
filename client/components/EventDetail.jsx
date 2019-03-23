@@ -1,9 +1,14 @@
 import React, {Fragment} from 'react'
+import Map from './MapViewer'
 import styles from '../styles/EventDetail.module.css'
 import eventTime from '../utils/eventTime';
 
 const EventDetail = ({ location }) => {
   const event = location.state
+  const makerLocation = [ 
+    event.location.latitude,
+    event.location.longitude,
+  ]
   return (
     <Fragment>
       <h1 className={styles.title}>{event.name}</h1>
@@ -27,7 +32,7 @@ const EventDetail = ({ location }) => {
           </div>
         </div>
         <div className={styles.mapArea}>
-          fds
+          <Map location={makerLocation} />
         </div>
       </div>
     </Fragment>
