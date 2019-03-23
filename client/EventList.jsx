@@ -1,76 +1,53 @@
 import  React, { Component } from 'react'
 import haversine from 'haversine'
+import { request } from 'graphql-request'
 import getCurrentLocation from './utils/getCurrentLocation'
+import getStartTime from './utils/getToday'
 import Event from './Event'
 
-const events = [
-  {
-    id: 'new-york-hamilton-broadway-musical-deals-march-2019',
-    name: 'Hamilton Broadway Musical Deals - March, 2019',
-    time_start: '2019-03-01T20:00:00-05:00',
-    time_end: '2019-03-31T15:00:00-04:00',
-    cost: 293,
-    location: {
-      latitude: 40.758983,
-      longitude: -73.9867219,
-    },
-  },
-  {
-    id: 'new-york-sunday-night-jazz-at-the-campbell-10',
-    name: 'Sunday Night Jazz at The Campbell',
-    time_start: '2019-03-24T18:00:00-04:00',
-    time_end: '2019-03-24T22:00:00-04:00',
-    cost: null,
-    location: {
-      latitude: 40.7526347,
-      longitude: -73.9774643,
-    },
-  },
-  {
-    id: 'new-york-free-friday-night-comedy-show',
-    name: 'Free Friday Night Comedy Show',
-    time_start: '2019-03-01T19:30:00-05:00',
-    time_end: null,
-    cost: 25,
-    location: {
-      latitude: 40.731826,
-      longitude: -74.001344,
-    },
-  },
-  {
-    id: 'new-york-free-friday-night-comedy',
-    name: 'Free Friday Night Comedy Show',
-    time_start: '2019-03-01T19:30:00-05:00',
-    time_end: null,
-    cost: 25,
-    location: {
-      latitude: 40.731826,
-      longitude: -74.001344,
-    },
-  },
-
-]
+const query = `
+  query getEvent($latitude: Float!, $longitude: Float!, $limit: Int!, $start_date: Int!, $end_date: Int!, $radius: Int) {
+    events(latitude: $latitude, longitude: $longitude, limit: $limit, start_date: $start_date, end_date: $end_date, radius: $radius) {
+      id
+      name
+      time_start
+      time_end
+      cost
+      location {
+        latitude
+        longitude
+      } 
+    }
+  }
+`
 
 class EventList extends Component {
   state = {
-    events,
+    events: []
   }
 
   componentDidMount() {
-    this.getPosition()
+    this.loadEvents()
   }
 
-  getPosition = async () => {
+  loadEvents = async () => {
     try {
       const currentLoc = await getCurrentLocation()
-      let { events } = this.state
-      events = events.map(event => ({
+      const today = getStartTime()
+      const queryParameters = {
+        ...currentLoc,
+        start_date: today,
+        end_date: today,
+        limit: 10,
+      }
+      let events = await request('/graphql', query, queryParameters)
+      events = events.events.map(event => ({
         ...event,
         distance: haversine(currentLoc, event.location, { unit: 'mile' })
       }))
       this.setState({ events })
-    } catch (fallbackPos) {
-      // this.setState({ currentLoc: fallbackPos })
+    } catch (e) {
+      console.log(e)
     }
   }
 

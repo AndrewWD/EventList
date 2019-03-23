@@ -12,19 +12,12 @@ const client = yelp.client(apiKey)
 app.use('/graphql', graphqlHTTP({
   schema,
   rootValue: {
-    events: ({ input }) => 
-      client.eventSearch({
-        latitude: input.latitude,
-        longitude: input.longitude,
-        limit: input.limit,
-        radius: input.radius,
-        start_date: input.start_date,
-      }).then(res => {
+    events: args => 
+      client.eventSearch(args).then(res => {
         // Extract the required information from the response data
         const essentialInfos = res.jsonBody.events.map(
           event => {
-            const { latitude, longitude } = event
-            const { id, name, time_start, time_end, cost } = event
+            const { id, name, time_start, time_end, cost, latitude, longitude } = event
             return { 
               id,
               name, 

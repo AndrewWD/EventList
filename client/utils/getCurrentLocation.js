@@ -4,21 +4,31 @@ const fallbackLocation = {
   longitude: -74.0374355,
 }
 
-const getCurrentLocation = () => {
-  return new Promise((resolve, reject) => {
-    if (navigator && 'geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        const coords = {
-          latitude: pos.coords.latitude,
-          longitude: pos.coords.longitude,
-        }
-        resolve(coords)
-      }, () => reject(fallbackLocation))
-    } else {
-      reject(fallbackLocation)
-    }
-  })
-}
+// time limit for getting location
+const timeout = new Promise(resolve => {
+  const wait = setTimeout(() => {
+    clearTimeout(wait)
+    resolve(fallbackLocation)
+  }, 5000)
+})
 
-export default getCurrentLocation
+const getCurrentLocation = new Promise(resolve => {
+  if (navigator && 'geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(pos => {
+      const coords = {
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude,
+      }
+      console.log('gocha')
+      resolve(coords)
+    }, () => resolve(fallbackLocation))
+  } else {
+    resolve(fallbackLocation)
+  }
+})
+
+export default () => Promise.race([
+  timeout, 
+  getCurrentLocation
+])
 

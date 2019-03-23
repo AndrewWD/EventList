@@ -21,11 +21,12 @@ const schema = buildSchema(`
     longitude: Float!
     limit: Int!
     start_date: Int!
+    end_date: Int!
     radius: Int = 40000
   }
 
   type RootQuery {
-    events(input: UserQuery!): [Event!]!
+    events(latitude: Float!, longitude: Float!, limit: Int!, start_date: Int!, end_date: Int!, radius: Int = 40000): [Event!]!
   }
 
   schema {

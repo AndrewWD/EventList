@@ -76,6 +76,9 @@ if (isDev) {
     historyApiFallback: {
       index: '/assets/index.html',
     },
+    proxy: {
+      '/graphql': 'http://localhost:8000',
+    }
   }
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
 } else {
