@@ -6,7 +6,8 @@
   "scripts": {
     "build:client": "webpack-cli",
     "dev:client": "cross-env NODE_ENV=dev webpack-dev-server --open",
-    "dev:server": "NODE_ENV=dev nodemon server/server.js"
+    "dev:server": "NODE_ENV=dev nodemon server/server.js",
+    "start": "npm run build:client && node server/server.js"
   },
   "author": "Yang Gao",
   "license": "ISC",
@@ -38,6 +39,7 @@
     "moment": "^2.24.0",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
+    "react-router-dom": "^5.0.0",
     "yelp-fusion": "^2.2.1"
   }
 }

@@ -1,9 +1,12 @@
 const express = require('express')
 const graphqlHTTP = require('express-graphql') 
 const yelp = require('yelp-fusion')
+const path = require('path')
 const schema = require('./schema')
 
 const app = express()
+
+app.use('/assets', express.static(path.join(__dirname, '../dist')))
 
 // apiKey for the yelp api
 const apiKey = 'HKpdOBKJ1UzKt9VCQ3UqdhyfIOoApSeEeQWE_5BfDm500BjVMuUqVMrS2jGAaU6uUzqvaNTgP-T_6jsLi36KM_u11NNZnsePk_X20O9vk_1F4QPwKOrFTUZKUGmQXHYx'
@@ -33,6 +36,10 @@ app.use('/graphql', graphqlHTTP({
   },
   graphiql: process.env.NODE_ENV == 'dev'
 }))
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'))
+})
 
 const PORT = process.env.PORT || 8000
 

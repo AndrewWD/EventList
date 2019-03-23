@@ -1,0 +1,9 @@
+.container > h1 {
+  margin-left: 10px;
+  margin-bottom: 40px;
+}
+
+.event-list {
+  display: flex;
+  flex-flow: row wrap;
+}

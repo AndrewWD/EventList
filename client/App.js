@@ -1,31 +1,33 @@
 import React, { Component } from 'react'
 import { hot } from 'react-hot-loader'
-import EventList from './EventList.jsx'
-import './styles/App.css';
+import { Link, Route, BrowserRouter as Router } from 'react-router-dom'
+import EventList from './components/EventList'
+import EventDetail from './components/EventDetail'
+import './styles/App.css'
 
 class App extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand-md navbar-light bg-light">
-          <a className="navbar-brand" href="#">YelpEvent</a>
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item active">
-                <a className="nav-link" href="#">Events<span className="sr-only">(current)</span></a>
+        <Router>
+          <nav className="nav-bar">
+            <ul>
+              <li>
+                <Link to={{
+                  pathname: "/",
+                  state: { reload: true }
+                }}>YelpEvent</Link>
               </li>
             </ul>
+          </nav>
+          <div className="container">
+            <Route path="/" exact component={EventList} />
+            <Route path="/details/:id" component={EventDetail} />
           </div>
-        </nav>
-
-        <div className="event-list">
-          <h1>Today's Events</h1>
-          <EventList />
-        </div>
+        </Router>
+        
       </div>
+      
     )
   }
 }

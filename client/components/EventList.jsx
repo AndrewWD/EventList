@@ -1,9 +1,11 @@
-import  React, { Component } from 'react'
+import  React, { Component, Fragment } from 'react'
 import haversine from 'haversine'
 import { request } from 'graphql-request'
-import getCurrentLocation from './utils/getCurrentLocation'
-import getStartTime from './utils/getToday'
+import getCurrentLocation from '../utils/getCurrentLocation'
+import getStartTime from '../utils/getToday'
 import Event from './Event'
+import '../styles/EventList.css'
+import '../styles/LoadingRing.css'
 
 const query = `
   query getEvent($latitude: Float!, $longitude: Float!, $limit: Int!, $start_date: Int!, $end_date: Int!, $radius: Int) {
@@ -23,11 +25,21 @@ const query = `
 
 class EventList extends Component {
   state = {
-    events: []
+    events: [],
+    loading: true,
   }
 
   componentDidMount() {
     this.loadEvents()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location.state.reload) {
+      this.setState({
+        loading: true
+      })
+      this.loadEvents()
+    }
   }
 
   loadEvents = async () => {
@@ -38,28 +50,40 @@ class EventList extends Component {
         ...currentLoc,
         start_date: today,
         end_date: today,
-        limit: 10,
+        limit: 11,
       }
       let events = await request('/graphql', query, queryParameters)
       events = events.events.map(event => ({
         ...event,
         distance: haversine(currentLoc, event.location, { unit: 'mile' })
       }))
-      this.setState({ events })
+      this.setState({ 
+        events,
+        loading: false,
+      })
     } catch (e) {
       console.log(e)
     }
   }
 
   render() {
-    const { events } = this.state
+    const { events, loading} = this.state
     events.sort((a, b) => a.distance - b.distance)
     return (
-      <div className="row">
-        {events.map(event => (
-          <Event event={event} key={event.id} />
-        ))}
-      </div>
+      <Fragment>
+        <h1>Today's Events</h1>
+        {
+          loading ? (
+            <div className="loading-ring"></div>
+          ) : (
+            <div className="event-list">
+              {events.map(event => (
+                <Event event={event} key={event.id} />
+              ))}
+            </div>
+          )
+        }
+      </Fragment> 
     )
   }
 }

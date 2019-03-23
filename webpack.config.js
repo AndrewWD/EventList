@@ -83,7 +83,7 @@ if (isDev) {
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
 } else {
   config.plugins.push(new CleanWebpackPlugin())
-  config.plugins.push(new BundleAnalyzerPlugin())
+  // config.plugins.push(new BundleAnalyzerPlugin())
 }
 
 module.exports = config

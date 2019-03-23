@@ -9,7 +9,7 @@ const timeout = new Promise(resolve => {
   const wait = setTimeout(() => {
     clearTimeout(wait)
     resolve(fallbackLocation)
-  }, 5000)
+  }, 1000)
 })
 
 const getCurrentLocation = new Promise(resolve => {
@@ -19,7 +19,6 @@ const getCurrentLocation = new Promise(resolve => {
         latitude: pos.coords.latitude,
         longitude: pos.coords.longitude,
       }
-      console.log('gocha')
       resolve(coords)
     }, () => resolve(fallbackLocation))
   } else {
