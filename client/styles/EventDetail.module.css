@@ -1,6 +1,86 @@
 .eventContainer {
   margin-left: 10px;
   width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.eventBody {
+  display: flex;
+  margin-right: 10px;
+  flex: 1;
   height: 400px;
-  border: 1px solid black;
+  border: 1px solid rgba(0, 0, 0, .125);
+  border-radius: 0.25rem;
+}
+
+.imgContainer {
+  flex: 0 0 400px;
+  height: 100%;
+}
+
+.detailContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 1;
+  justify-content: center;
+  margin-left: 10%;
+  font-size: 1.3rem;
+}
+
+.detailContainer > div {
+  margin-bottom: 20px;
+}
+
+.mapArea {
+  flex: 0 0 400px;
+  height: 400px;
+  border: 1px solid rgba(0, 0, 0, .125);
+  border-radius: 0.25rem;
+}
+
+@media all and (max-width: 1700px) {
+  .title {
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .eventContainer {
+    flex-flow: column;
+    align-items: center;
+    margin-left: 0;
+  }
+  .eventBody {
+    flex-flow: column;
+    margin-right: 0;
+    margin-bottom: 10px;
+    height: 800px;
+    width: 500px;
+  }
+  .imgContainer {
+    flex-basis: 500px;
+  }
+  .mapArea {
+    width: 500px;
+  }
+}
+
+@media all and (max-width: 768px) {
+  .eventBody, .mapArea {
+    width: 400px;
+  }
+
+  .imgContainer {
+    flex-basis: 400px;
+  }
+}
+
+@media all and (max-width: 576px) {
+  .imgContainer {
+    flex-basis: 250px;
+  }
+  .eventBody, .mapArea {
+    height: 450px;
+    width: 250px;
+  }
 }

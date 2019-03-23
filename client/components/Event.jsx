@@ -9,9 +9,15 @@ const Event = ({ event }) => {
       <div className={styles.titleContainer}>
         <h2>{event.name}</h2>
       </div>
-      <div><strong>Time</strong>: {eventTime(event.time_start, event.time_end)}</div>
-      <div><strong>Cost</strong>: {!event.cost ? 'N/A' : `$${event.cost}`}</div>
-      <div><strong>Distance</strong>: {event.distance ? event.distance.toPrecision(3) + ' miles' : '-'}</div>
+      <div>
+        <strong>Time</strong>: {eventTime(event.time_start, event.time_end)}
+      </div>
+      <div>
+        <strong>Cost</strong>: {!event.cost ? 'N/A' : `$${event.cost}`}
+      </div>
+      <div>
+        <strong>Distance</strong>: {event.distance ? event.distance.toPrecision(3) + ' miles' : '-'}
+      </div>
       <Link to={{
         pathname: `/details/${event.id}`,
         state: event,
