@@ -4,6 +4,7 @@ import { request } from 'graphql-request'
 import getCurrentLocation from '../utils/getCurrentLocation'
 import getStartTime from '../utils/getToday'
 import Event from './Event'
+import NumInput from './NumInput'
 import styles from '../styles/EventList.module.css'
 import loadingStyles from '../styles/LoadingRing.module.css'
 
@@ -31,19 +32,19 @@ class EventList extends Component {
   }
 
   componentDidMount() {
-    this.loadEvents()
+    this.loadEvents(this.props.limit)
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.location.state.reload) {
+    if (nextProps.location.state && nextProps.location.state.reload) {
       this.setState({
         loading: true
       })
-      this.loadEvents()
+      this.loadEvents(this.props.limit)
     }
   }
 
-  loadEvents = async () => {
+  loadEvents = async limit => {
     try {
       const currentLoc = await getCurrentLocation()
       const today = getStartTime()
@@ -51,7 +52,7 @@ class EventList extends Component {
         ...currentLoc,
         start_date: today,
         end_date: today,
-        limit: 11,
+        limit,
       }
       let events = await request('/graphql', query, queryParameters)
       events = events.events.map(event => ({
@@ -67,6 +68,14 @@ class EventList extends Component {
     }
   }
 
+  onReloadEventList = limit => {
+    this.props.onLimitChange(limit)
+    this.setState({
+      loading: true,
+    })
+    this.loadEvents(limit)
+  }
+
   render() {
     const { events, loading} = this.state
     events.sort((a, b) => a.distance - b.distance)
@@ -77,11 +86,14 @@ class EventList extends Component {
           loading ? (
             <div className={loadingStyles.loadingRing}></div>
           ) : (
-            <div className={styles.eventList}>
-              {events.map(event => (
-                <Event event={event} key={event.id} />
-              ))}
-            </div>
+            <Fragment>
+              <NumInput className={styles.numInput} reloadEventList={this.onReloadEventList} />
+              <div className={styles.eventList}>
+                {events.map(event => (
+                  <Event event={event} key={event.id} />
+                ))}
+              </div>
+            </Fragment>
           )
         }
       </Fragment> 

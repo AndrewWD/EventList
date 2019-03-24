@@ -13,6 +13,7 @@ const config = {
   },
   output: {
     filename: '[name].[hash].js',
+    chunkFilename: '[name].[chunkhash].js',
     path: path.join(__dirname, './dist'),
     publicPath: '/assets/',
   },
@@ -20,16 +21,9 @@ const config = {
     extensions: ['.js', '.jsx'],
   },
   optimization: {
+    runtimeChunk: true,
     splitChunks: {
-      cacheGroups: {
-        default: false,
-        vendors: false,
-        vendor: {
-          name: 'vendor',
-          chunks: 'all',
-          test: /node_modules/
-        }
-      }
+      chunks: 'all',
     }
   },
   module: {
@@ -68,6 +62,7 @@ const config = {
     new HTMLWebpackPlugin({
       template: path.join(__dirname, './client/template.html')
     }),
+    new webpack.HashedModuleIdsPlugin(),
   ]
 }
 

@@ -1,11 +1,35 @@
 import React, { Component } from 'react'
 import { hot } from 'react-hot-loader'
 import { Link, Route, BrowserRouter as Router } from 'react-router-dom'
-import EventList from './components/EventList'
-import EventDetail from './components/EventDetail'
+import Loadable from 'react-loadable'
 import styles from './styles/App.module.css'
 
+const Loading = () => (<span />)
+
+const EventList = Loadable({
+  loader: () => import(
+    /* webpackChunkName: "EventList" */ 
+    './components/EventList'),
+  loading: Loading,
+})
+
+const EventDetail = Loadable({
+  loader: () => import(
+    /* webpackChunkName: "EventDetail" */
+    './components/EventDetail'),
+  loading: Loading,
+})
+
 class App extends Component {
+  state = {
+    limit: 10,
+  }
+  handleLimitChange = limit => {
+    this.setState({
+      limit,
+    })
+  }
+
   render() {
     return (
       <div>
@@ -21,13 +45,14 @@ class App extends Component {
             </ul>
           </nav>
           <div className={styles.Container}>
-            <Route path="/" exact component={EventList} />
+            <Route 
+              path="/" 
+              exact 
+              render={props => (<EventList {...props} limit={this.state.limit} onLimitChange={this.handleLimitChange} />)} />
             <Route path="/details/:id" component={EventDetail} />
           </div>
         </Router>
-        
       </div>
-      
     )
   }
 }

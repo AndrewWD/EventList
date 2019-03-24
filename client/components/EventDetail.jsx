@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react'
+import { Link } from 'react-router-dom'
 import Map from './MapViewer'
 import styles from '../styles/EventDetail.module.css'
 import eventTime from '../utils/eventTime';
@@ -11,6 +12,9 @@ const EventDetail = ({ location }) => {
   ]
   return (
     <Fragment>
+      <Link to="/" state={{ reload: true }}>
+        <button className={styles.backButton}>Back</button>
+      </Link>
       <h1 className={styles.title}>{event.name}</h1>
       <div className={styles.eventContainer}>
         <div className={styles.eventBody}>

@@ -16,6 +16,7 @@ const presets = [
 const plugins = [
   ['react-hot-loader/babel'],
   ['@babel/plugin-proposal-class-properties'],
+  ['@babel/plugin-syntax-dynamic-import']
 ]
 
 module.exports = { presets, plugins }

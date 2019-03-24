@@ -39,6 +39,10 @@
   color: white;
 }
 
+.detailButton:focus {
+  outline: none;
+}
+
 @media all and (max-width: 1200px) {
   .eventBody {
     width: 100%;

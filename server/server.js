@@ -6,7 +6,7 @@ const schema = require('./schema')
 
 const app = express()
 
-app.use('/assets', express.static(path.join(__dirname, '../dist')))
+app.use('/assets', express.static(path.join(__dirname, '../dist'), { maxAge: 86400000 }))
 
 // apiKey for the yelp api
 const apiKey = 'HKpdOBKJ1UzKt9VCQ3UqdhyfIOoApSeEeQWE_5BfDm500BjVMuUqVMrS2jGAaU6uUzqvaNTgP-T_6jsLi36KM_u11NNZnsePk_X20O9vk_1F4QPwKOrFTUZKUGmQXHYx'
@@ -38,7 +38,7 @@ app.use('/graphql', graphqlHTTP({
   graphiql: process.env.NODE_ENV == 'dev'
 }))
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'))
 })
 
