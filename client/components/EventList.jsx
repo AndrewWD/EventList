@@ -28,7 +28,7 @@ const query = `
 class EventList extends Component {
   state = {
     events: [],
-    loading: true,
+    loading: false,
   }
 
   componentDidMount() {
@@ -36,16 +36,14 @@ class EventList extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.location.state && nextProps.location.state.reload) {
-      this.setState({
-        loading: true
-      })
-      this.loadEvents(this.props.limit)
-    }
+    this.loadEvents(nextProps.limit)
   }
 
   loadEvents = async limit => {
     try {
+      this.setState({
+        loading: true
+      })
       const currentLoc = await getCurrentLocation()
       const today = getStartTime()
       const queryParameters = {
@@ -70,10 +68,6 @@ class EventList extends Component {
 
   onReloadEventList = limit => {
     this.props.onLimitChange(limit)
-    this.setState({
-      loading: true,
-    })
-    this.loadEvents(limit)
   }
 
   render() {

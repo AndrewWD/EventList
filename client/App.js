@@ -24,6 +24,7 @@ class App extends Component {
   state = {
     limit: 10,
   }
+
   handleLimitChange = limit => {
     this.setState({
       limit,
@@ -37,10 +38,7 @@ class App extends Component {
           <nav className={styles.navBar}>
             <ul>
               <li>
-                <Link to={{
-                  pathname: "/",
-                  state: { reload: true }
-                }}>YelpEvent</Link>
+                <Link to={{ pathname: "/" }}>YelpEvent</Link>
               </li>
             </ul>
           </nav>

@@ -12,7 +12,7 @@ const EventDetail = ({ location }) => {
   ]
   return (
     <Fragment>
-      <Link to="/" state={{ reload: true }}>
+      <Link to="/">
         <button className={styles.backButton}>Back</button>
       </Link>
       <h1 className={styles.title}>{event.name}</h1>
