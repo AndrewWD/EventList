@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import styles from '../styles/NumInput.module.css'
 
 class NumInput extends Component {
@@ -16,7 +17,8 @@ class NumInput extends Component {
     e.preventDefault()
     const { reloadEventList } = this.props
     const { inputNum } = this.state
-    const limit = inputNum.length === 0 || parseInt(inputNum) <= 0  ? 10 : parseInt(inputNum)
+    const inputInt = parseInt(inputNum)
+    const limit = (isNaN(inputInt) || inputInt <= 0) ? 10 : inputInt
     reloadEventList(limit)
   }
 
@@ -30,6 +32,10 @@ class NumInput extends Component {
       </form>
     )
   }
+}
+
+NumInput.propTypes = {
+  reloadEventList: PropTypes.func,
 }
 
 export default NumInput

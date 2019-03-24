@@ -1,6 +1,7 @@
 import  React, { Component, Fragment } from 'react'
 import haversine from 'haversine'
 import { request } from 'graphql-request'
+import PropTypes from 'prop-types'
 import getCurrentLocation from '../utils/getCurrentLocation'
 import getStartTime from '../utils/getToday'
 import Event from './Event'
@@ -93,6 +94,11 @@ class EventList extends Component {
       </Fragment> 
     )
   }
+}
+
+EventList.propTypes = {
+  limit: PropTypes.number.isRequired,
+  onLimitChange: PropTypes.func.isRequired,
 }
 
 export default EventList

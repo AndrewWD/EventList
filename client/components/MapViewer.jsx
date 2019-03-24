@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Map, Marker, TileLayer } from 'react-leaflet'
 
 const MapViewer = ({ location }) => (
@@ -10,5 +11,9 @@ const MapViewer = ({ location }) => (
     <Marker position={location} />
   </Map>
 )
+
+MapViewer.propTypes = {
+  location: PropTypes.array,
+}
 
 export default MapViewer 
